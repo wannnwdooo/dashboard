@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
 import { ITable } from './Table.types';
+import './Table.style.sass'
 
 export const Table: FC<ITable> = ({ rows }) => {
   return (
-    <table>
+    <div className='tableWrapper tableGrid'>
+    <table className='tableContainer'>
       <thead>
         <tr>
           <th>Уровень</th>
@@ -36,5 +38,6 @@ export const Table: FC<ITable> = ({ rows }) => {
         )}
       </tbody>
     </table>
+    </div>
   );
 };

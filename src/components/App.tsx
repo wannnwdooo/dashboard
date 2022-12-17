@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import './App.style.sass';
 import { gettingData, IRow, Table } from './Table';
 import { Navbar } from './Navbar';
+import { Sidebar } from "./Sidebar";
 
 export const baseUrl = `http://185.244.172.108:8081`;
 export const id = 31357;
@@ -48,12 +49,16 @@ export const App: FC = () => {
   };
 
   return (
-    <>
+    <div className='appWrapper'>
       <Navbar />
+      <Sidebar/>
       <Table rows={rows} />
       {/*<button onClick={gettingData}>Данные</button>*/}
-      <button onClick={createRow}>создание строки</button>
-      <button onClick={() => console.log(rows)}>консоль</button>
-    </>
+      <div className='buttonContainer'>
+        <button onClick={createRow}>создание строки</button>
+        <button onClick={() => console.log(rows)}>консоль</button>
+      </div>
+
+    </div>
   );
 };

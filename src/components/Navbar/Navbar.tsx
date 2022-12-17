@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 export const Navbar: FC = () => {
   return (
-    <div className="wrapper">
+    <div className="navbarWrapper navbarGrid">
       <div className="topOfNavbar">
         <img src="/assets/image/cube.svg" alt="cube" className="topOfNavIcon" />
         <img
@@ -22,7 +22,7 @@ export const Navbar: FC = () => {
         </nav>
       </div>
       <div className="bottomOfNavbar">
-        <div className="projectList">
+        <div className="projectList navbarGridList">
           <div className="textContainer">
             <h3>Название проекта</h3>
             <p className="abbreviation">Аббревиатура</p>
