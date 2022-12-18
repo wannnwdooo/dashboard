@@ -22,7 +22,7 @@ export const Navbar: FC = () => {
         </nav>
       </div>
       <div className="bottomOfNavbar">
-        <div className="projectList navbarGridList">
+        <div className="projectList">
           <div className="textContainer">
             <h3>Название проекта</h3>
             <p className="abbreviation">Аббревиатура</p>

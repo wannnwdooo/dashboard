@@ -27,7 +27,9 @@ export const Sidebar: FC = () => {
         <div
           onClick={() => setActiveItem(id)}
           key={id}
-          className={activeItem === id ? 'sidebarItem sidebarActive' : 'sidebarItem'}>
+          className={
+            activeItem === id ? 'sidebarItem sidebarActive' : 'sidebarItem'
+          }>
           <img
             src="/assets/image/square.svg"
             alt="square"

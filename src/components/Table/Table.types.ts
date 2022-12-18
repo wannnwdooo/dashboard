@@ -3,6 +3,7 @@ export interface ITable {
   // setRows: () => void;
 }
 export interface IRow {
+  child: IRow[];
   id: number;
   equipmentCosts: number;
   estimatedProfit: number;

@@ -29,8 +29,9 @@ export const gettingData = async (
   setRows: (arg0: (prevState: IRow[]) => IRow[]) => void
 ) => {
   const response = await axios.get(`${baseUrl}${gettingDataUrl}`);
-  let result = deepSearchByKey(response, 'rowName');
+  console.log(response);
+  // let result = deepSearchByKey(response, 'rowName');
   if (rows.length === 0) {
-    setRows(prevState => [...prevState, ...result]);
+    setRows(prevState => [...prevState, ...response.data]);
   }
 };
