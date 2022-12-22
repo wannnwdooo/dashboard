@@ -6,9 +6,11 @@ import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 
 export const baseUrl = `http://185.244.172.108:8081`;
-export const id = 31357;
-export const gettingDataUrl = `/v1/outlay-rows/entity/${id}/row/list`;
-export const createRowUrl = `/v1/outlay-rows/entity/${id}/row/create`;
+export const eID = 31357;
+export const gettingDataUrl = `/v1/outlay-rows/entity/${eID}/row/list`;
+export const createRowUrl = `/v1/outlay-rows/entity/${eID}/row/create`;
+
+export const updateRowUrl = `/v1/outlay-rows/entity/${eID}/row/{id}/update`
 
 export const App: FC = () => {
   const [rows, setRows] = useState<IRow[]>([]);
@@ -17,21 +19,9 @@ export const App: FC = () => {
     (async () => {
       await gettingData(rows, setRows);
     })();
-  }, [rows]);
+  },[rows]);
 
-  const createRow: any = async (
-    equipmentCosts: number,
-    estimatedProfit: number,
-    machineOperatorSalary: number,
-    mainCosts: number,
-    materials: number,
-    mimExploitation: number,
-    overheads: number,
-    parentId: number,
-    rowName: string,
-    salary: number,
-    supportCosts: number
-  ) => {
+  const createRow: any = async () => {
     const response = await axios.post(`${baseUrl}${createRowUrl}`, {
       equipmentCosts: 0,
       estimatedProfit: 0,
@@ -48,6 +38,22 @@ export const App: FC = () => {
     console.log(response);
   };
 
+  const editRow = async () => {
+    const response = await axios.post(`${baseUrl}/v1/outlay-rows/entity/${eID}/row/24342/update`, {
+      equipmentCosts: 50,
+      estimatedProfit: 700,
+      machineOperatorSalary: 0,
+      mainCosts: 0,
+      materials: 0,
+      mimExploitation: 0,
+      overheads: 666,
+      rowName: 'sdsfe233434f',
+      salary: 300,
+      supportCosts: 0,
+    })
+    console.log(response);
+  }
+
   return (
     <div className="appWrapper">
       <Navbar />
@@ -55,6 +61,7 @@ export const App: FC = () => {
       <Table rows={rows} depth={0} />
       {/*<button onClick={gettingData}>Данные</button>*/}
       <div className="buttonContainer">
+        <button onClick={editRow}>редактирование строки</button>
         <button onClick={createRow}>создание строки</button>
         <button onClick={() => console.log(rows)}>консоль</button>
       </div>

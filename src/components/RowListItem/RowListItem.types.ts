@@ -2,13 +2,19 @@ import { IRow } from '../Table';
 
 export interface IRowListItem {
   row: {
+    child: IRow[];
+    id: number;
+    equipmentCosts: number;
+    estimatedProfit: number;
+    machineOperatorSalary: number;
+    mainCosts: number;
+    materials: number;
+    mimExploitation: number;
+    overheads: number;
+    parentId: number;
     rowName: string;
     salary: number;
-    equipmentCosts: number;
-    overheads: number;
-    estimatedProfit: number;
-    id: number;
-    child: IRow[];
+    supportCosts: number;
   };
   depth: number;
 }

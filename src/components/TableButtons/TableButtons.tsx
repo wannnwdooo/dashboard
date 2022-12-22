@@ -41,19 +41,24 @@ const closeArrayContainer = [
 ];
 export const TableButtons: FC<ITableButtons> = ({ depth }) => {
   const [rowCreation, setRowCreation] = useState(false);
+
+  const currentItem = buttonArray.find(item => item.id === depth);
   const obj = () => {
-    const found = buttonArray.find(item => item.id === depth);
-    if (found) {
-      return [found].map(({ id, img, alt, value }) => (
-        <div
-          key={id}
-          className={`${objectSearchById(closeArrayContainer, depth)}`}>
-          <img src={img} alt={alt} className={value} />
-        </div>
-      ));
-    }
+    if (!currentItem) return null;
+    const { id, img, alt, value } = currentItem;
+    return (
+      <div
+        key={id}
+        className={`${objectSearchById(closeArrayContainer, depth)}`}>
+        <img
+          onMouseOver={() => setRowCreation(!rowCreation)}
+          src={img}
+          alt={alt}
+          className={value}
+        />
+      </div>
+    );
   };
-  console.log(obj(), depth);
   return (
     <>
       {!rowCreation ? (
