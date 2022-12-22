@@ -1,0 +1,48 @@
+.tableButtonContainer
+  background: #414144
+  border-radius: 6px
+  height: 28px
+  margin-left: 9px
+
+  //.tableButtonContainerOff
+  //background: #414144
+  //border-radius: 6px
+  //height: 28px
+  //margin-left: 9px
+
+.firstDepthButtonOpenContainer
+  background: #414144
+  border-radius: 6px
+  height: 28px
+  margin: 0 0 0 9px
+
+.secondDepthButtonOpenContainer
+  @extend .firstDepthButtonOpenContainer
+  margin: 0 6px 0 30px
+
+.threeDepthButtonOpenContainer
+  @extend .firstDepthButtonOpenContainer
+  margin: 0 12px 0 50px
+
+.firstDepthButtonCloseContainer
+  margin: 0 0 0 9px
+
+.secondDepthButtonCloseContainer
+  margin: 0 6px 0 30px
+
+.threeDepthButtonCloseContainer
+  margin: 0 12px 0 50px
+
+.firstFolderButton
+  cursor: pointer
+  margin: 2px 0 2px 2px
+
+.secondFolderButton
+  @extend .firstFolderButton
+
+.fileButton
+  @extend .firstFolderButton
+
+.deleteButton
+  @extend .firstFolderButton
+  margin: 6px

@@ -1,77 +1,18 @@
-$ident: 20px
-$left: -($ident)
-$border: #ddd
-
 .tableWrapper
   background: #202124
   color: #FFFFFF
   width: 100%
   padding: 0 10px
 
-  .tableContainer
-    width: 100%
-    //min-width: 1200px
-    table-layout: fixed
-    border-collapse: collapse
-
 .tableRowHeader
   height: 42px
   border-bottom: 1px solid #414144
   text-align: left
+  align-items: center
+  display: grid
+  grid-template-columns: 116px auto 15% 15% 15% 15%
 
   .tableCellHeader
     font-weight: 400
     color: #A1A1AA
-    padding-left: 12px
-    width: 15%
-
-    &:nth-child(1)
-      width: 10%
-
-    &:nth-child(2)
-      width: 30%
-
-
-.tableBodyRow
-  height: 60px
-  border-bottom: 1px solid #414144
-
-  .tableBodyCell
-    padding-left: 12px
-
-.firstLevelCell
-    padding-left: 12px
-    margin: 10px 0 10px 10px
-    position: relative
-    &:before
-      content: ""
-      position: absolute
-      top: -10px
-      left: $left
-      border-left: 1px solid $border
-      border-bottom: 1px solid $border
-      width: $ident
-      height: 15px
-
-    &:after
-      position: absolute
-      content: ""
-      top: 5px
-      left: $left
-      border-left: 1px solid $border
-      border-top: 1px solid $border
-      width: $ident
-      height: 100%
-
-    &:last-child:after
-      display: none
-
-
-.secondLevelCell
-
-.threeLevelCell
-
-
-
-
-
+    padding: 0 12px

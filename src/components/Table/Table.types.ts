@@ -1,5 +1,6 @@
 export interface ITable {
   rows: IRow[];
+  depth: number;
   // setRows: () => void;
 }
 export interface IRow {

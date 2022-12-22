@@ -1,0 +1,57 @@
+$border: #C6C6C6
+
+.firstDepthLevel
+  list-style-type: none
+
+
+.secondDepthLevel
+  list-style-type: none
+  position: relative
+
+  &:before
+    content: ""
+    position: absolute
+    top: -23px
+    left: 22px
+    border-left: 1px solid $border
+    border-bottom: 1px solid $border
+    width: 12px
+    height: 52px
+
+  &:after
+    position: absolute
+    content: ""
+    top: 29px
+    left: 22px
+    border-left: 1px solid $border
+    border-top: 1px solid $border
+    width: 12px
+    height: 100%
+
+  &:last-child:after
+    display: none
+
+
+.threeDepthLevel
+  @extend .secondDepthLevel
+
+  &:before
+    left: 43px
+
+  &:after
+    left: 43px
+
+  &:last-child:after
+    display: none
+
+
+.tableBodyRow
+  height: 60px
+  border-bottom: 1px solid #414144
+  align-items: center
+  display: grid
+  grid-template-columns: 116px auto 15% 15% 15% 15%
+  min-width: 830px
+
+.tableBodyCell
+  padding: 21px 0 21px 12px

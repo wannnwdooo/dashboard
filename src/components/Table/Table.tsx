@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { ITable } from './Table.types';
 import './Table.style.sass';
+import { RowList } from '../RowList';
+import { ITable } from '.';
 
 const theadItems = [
   { id: 1, value: 'Уровень' },
@@ -14,63 +15,16 @@ const theadItems = [
 export const Table: FC<ITable> = ({ rows }) => {
   return (
     <div className="tableWrapper tableGrid">
-      <table className="tableContainer">
-        <thead>
-          <tr className="tableRowHeader">
-            {theadItems.map(({ id, value }) => (
-              <th key={id} className="tableCellHeader">
-                {value}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(
-            ({
-              child,
-              id,
-              rowName,
-              salary,
-              equipmentCosts,
-              overheads,
-              estimatedProfit,
-            }) => (
-              <>
-                <tr key={id} className="tableBodyRow">
-                  <td className="firstLevelCell"></td>
-                  <td className="tableBodyCell">{rowName}</td>
-                  <td className="tableBodyCell">{salary}</td>
-                  <td className="tableBodyCell">{equipmentCosts}</td>
-                  <td className="tableBodyCell">{overheads}</td>
-                  <td className="tableBodyCell">{estimatedProfit}</td>
-                </tr>
-
-                {Array.isArray(child) &&
-                  child.length !== 0 &&
-                  child.map(
-                    ({
-                      id,
-                      rowName,
-                      salary,
-                      equipmentCosts,
-                      overheads,
-                      estimatedProfit,
-                    }) => (
-                      <tr key={id} className="tableBodyRow">
-                        <td className="threeLevelCell"></td>
-                        <td className="tableBodyCell">{rowName}</td>
-                        <td className="tableBodyCell">{salary}</td>
-                        <td className="tableBodyCell">{equipmentCosts}</td>
-                        <td className="tableBodyCell">{overheads}</td>
-                        <td className="tableBodyCell">{estimatedProfit}</td>
-                      </tr>
-                    )
-                  )}
-              </>
-            )
-          )}
-        </tbody>
-      </table>
+      <div className="tableRowHeader">
+        {theadItems.map(({ id, value }) => (
+          <span key={id} className="tableCellHeader">
+            {value}
+          </span>
+        ))}
+      </div>
+      <ul>
+        <RowList rows={rows} depth={0} />
+      </ul>
     </div>
   );
 };
