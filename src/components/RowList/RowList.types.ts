@@ -1,7 +1,4 @@
-import { IRow } from "../RowList";
-
-export interface IRowListItem {
-  row: {
+export interface IRow {
     child: IRow[];
     id: number;
     equipmentCosts: number;
@@ -15,15 +12,8 @@ export interface IRowListItem {
     rowName: string;
     salary: number;
     supportCosts: number;
-  };
-  depth: number;
-
-  updateRowCb: (value: IRow) => void
 }
-
-export interface IObjectSearchById {
-  (
-    array: { id: number; img?: string; alt?: string; value: string }[],
-    num: number
-  ): void;
+export interface IRowList {
+    rows?: IRow[];
+    depth: number;
 }

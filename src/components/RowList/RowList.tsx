@@ -1,13 +1,28 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { gettingData, IRow, IRowList } from '.';
 import { RowListItem } from '../RowListItem';
-import { ITable } from '../Table';
 
+export const RowList: FC<IRowList> = ({ depth }) => {
+  const [rows, setRows] = useState<IRow[]>([]);
 
-export const RowList: FC<ITable> = ({ rows, depth }) => {
+  const updateRowCb = () => {
+  };
+
+  useEffect(() => {
+    (async () => {
+      await gettingData(rows, setRows);
+    })();
+  });
+
   return (
     <>
       {rows.map(listItem => (
-        <RowListItem key={listItem.id} row={listItem} depth={depth} />
+        <RowListItem
+          key={listItem.id}
+          row={listItem}
+          depth={depth}
+          updateRowCb={updateRowCb}
+        />
       ))}
     </>
   );

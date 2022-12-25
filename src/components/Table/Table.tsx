@@ -1,7 +1,5 @@
-import React, { FC } from 'react';
 import './Table.style.sass';
 import { RowList } from '../RowList';
-import { ITable } from '.';
 
 const theadItems = [
   { id: 1, value: 'Уровень' },
@@ -12,7 +10,7 @@ const theadItems = [
   { id: 6, value: 'Сметная прибыль' },
 ];
 
-export const Table: FC<ITable> = ({ rows }) => {
+export const Table = () => {
   return (
     <div className="tableWrapper tableGrid">
       <div className="tableRowHeader">
@@ -23,7 +21,7 @@ export const Table: FC<ITable> = ({ rows }) => {
         ))}
       </div>
       <ul>
-        <RowList rows={rows} depth={0} />
+        <RowList depth={0} />
       </ul>
     </div>
   );

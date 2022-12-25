@@ -1,33 +1,16 @@
 import React, { FC, useState } from 'react';
 import { IRowListItem, objectSearchById } from '.';
-import { RowList } from '../RowList';
 import { TableButtons } from '../TableButtons';
 import './RowListItem.style.sass';
 import axios from 'axios';
 import { baseUrl, eID } from '../App';
 
-const style = [
+const treeStyle = [
   { id: 0, value: 'firstDepthLevel' },
   { id: 1, value: 'secondDepthLevel' },
   { id: 2, value: 'threeDepthLevel' },
 ];
-
-const initialValue = {
-  equipmentCosts: 0,
-  estimatedProfit: 0,
-  overheads: 0,
-  rowName: '',
-  salary: 0,
-};
-interface IValue {
-  equipmentCosts: number;
-  estimatedProfit: number;
-  overheads: number;
-  rowName: string;
-  salary: number;
-}
-
-export const RowListItem: FC<IRowListItem> = ({ row, depth }) => {
+export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
   const {
     rowName,
     id,
@@ -37,17 +20,34 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth }) => {
     estimatedProfit,
     equipmentCosts,
   } = row;
+  const spanRow = {
+    rowName,
+    salary,
+    equipmentCosts,
+    overheads,
+    estimatedProfit,
+  };
+
   const inputsValues = [
-    {id: 0, placeholder: rowName},
-    {id: 1, placeholder: salary},
-    {id: 2, placeholder: equipmentCosts},
-    {id: 3, placeholder: overheads},
-    {id: 4, placeholder: estimatedProfit}
-  ]
+    { id: 0, placeholder: rowName, inputName: 'rowName' },
+    { id: 1, placeholder: salary, inputName: 'salary' },
+    { id: 2, placeholder: equipmentCosts, inputName: 'equipmentCosts' },
+    { id: 3, placeholder: overheads, inputName: 'overheads' },
+    { id: 4, placeholder: estimatedProfit, inputName: 'estimatedProfit' },
+  ];
+
+  const initialValue = {
+    equipmentCosts: equipmentCosts || 0,
+    estimatedProfit: estimatedProfit || 0,
+    overheads: overheads || 0,
+    rowName: rowName || '',
+    salary: salary || 0,
+  };
+
   const [value, setValue] = useState(initialValue);
   const [editRowState, setEditRowState] = useState(false);
 
-  const editRowFn = async () => {
+  const updateRow = async () => {
     const response = await axios.post(
       `${baseUrl}/v1/outlay-rows/entity/${eID}/row/${id}/update`,
       {
@@ -63,86 +63,67 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth }) => {
         supportCosts: 0,
       }
     );
-    console.log(response);
+    updateRowCb(response.data.current);
     setEditRowState(!editRowState);
   };
+  const updateRowHandler: React.KeyboardEventHandler<
+    HTMLInputElement
+  > = async e => {
+    if (value.rowName !== '') {
+      if (e.key === 'Enter') await updateRow();
+    }
+  };
 
-  const inputChange = (e: React.ChangeEvent<HTMLInputElement>, placeholder: string | number) => {
+  const inputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    inputName: string
+  ) => {
     setValue({
       ...value,
-      [placeholder]: e.target.value
-    })
-  }
+      [inputName]: e.target.value,
+    });
+  };
 
   return (
     <>
-      <li key={id} className={`${objectSearchById(style, depth)}`}>
+      <li key={id} className={`${objectSearchById(treeStyle, depth)}`}>
         <div
           className="tableBodyRow"
           onDoubleClick={() => setEditRowState(!editRowState)}
-          onKeyDown={async e => {
-            if (value.rowName !== '') {
-              if (e.key === 'Enter') await editRowFn();
-            }
-          }}>
-          <span>
-            <TableButtons depth={depth} />
-          </span>
+          onKeyDown={updateRowHandler}>
+          <TableButtons depth={depth} />
           {!editRowState ? (
             <>
-              <span className="tableBodyCell">{rowName}</span>
-              <span className="tableBodyCell">{salary}</span>
-              <span className="tableBodyCell">{equipmentCosts}</span>
-              <span className="tableBodyCell">{overheads}</span>
-              <span className="tableBodyCell">{estimatedProfit}</span>
+              {Object.entries(spanRow).map(([key, value]) => (
+                <span key={key} className="tableBodyCell">
+                  {value}
+                </span>
+              ))}
             </>
           ) : (
             <>
-              {inputsValues.map(({id, placeholder}) => (
+              {inputsValues.map(({ id, placeholder, inputName }) => (
                 <input
                   key={id}
                   placeholder={`${placeholder}`}
                   className="tableBodyInput"
-                  onChange={(e) => inputChange(e, placeholder)}
+                  onChange={e => inputChange(e, inputName)}
                 />
               ))}
-              {/*<input*/}
-              {/*  placeholder={`${rowName}`}*/}
-              {/*  className="tableBodyInput"*/}
-              {/*  onChange={e => setValue({ ...value, rowName: e.target.value })}*/}
-              {/*/>*/}
-              {/*<input*/}
-              {/*  placeholder={`${salary}`}*/}
-              {/*  className="tableBodyInput"*/}
-              {/*  onChange={e => setValue({ ...value, salary: +e.target.value })}*/}
-              {/*/>*/}
-              {/*<input*/}
-              {/*  placeholder={`${equipmentCosts}`}*/}
-              {/*  className="tableBodyInput"*/}
-              {/*  onChange={e =>*/}
-              {/*    setValue({ ...value, equipmentCosts: +e.target.value })*/}
-              {/*  }*/}
-              {/*/>*/}
-              {/*<input*/}
-              {/*  placeholder={`${overheads}`}*/}
-              {/*  className="tableBodyInput"*/}
-              {/*  onChange={e =>*/}
-              {/*    setValue({ ...value, overheads: +e.target.value })*/}
-              {/*  }*/}
-              {/*/>*/}
-              {/*<input*/}
-              {/*  placeholder={`${estimatedProfit}`}*/}
-              {/*  className="tableBodyInput"*/}
-              {/*  onChange={e =>*/}
-              {/*    setValue({ ...value, estimatedProfit: +e.target.value })*/}
-              {/*  }*/}
-              {/*/>*/}
             </>
           )}
         </div>
         {child.length !== 0 && (
           <ul>
-            {Array.isArray(child) && <RowList rows={child} depth={depth + 1} />}
+            {Array.isArray(child) &&
+              child.map(listItem => (
+                <RowListItem
+                  key={listItem.id}
+                  row={listItem}
+                  depth={depth + 1}
+                  updateRowCb={updateRowCb}
+                />
+              ))}
           </ul>
         )}
       </li>
