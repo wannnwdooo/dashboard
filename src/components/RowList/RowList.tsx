@@ -3,24 +3,29 @@ import { gettingData, IRow, IRowList, updateRow } from '.';
 import { RowListItem } from '../RowListItem';
 
 export const RowList: FC<IRowList> = ({ depth }) => {
-  let [rows, setRows] = useState<IRow[]>([]);
+  const [rows, setRows] = useState<IRow[]>([]);
   const [updateRowValue, setUpdateRowValue] = useState<IRow[]>([]);
+  const [removedRow, setRemovedRow] = useState(false);
+  const [id, setId] = useState(0);
 
-  const updateRowCb = (updateRowValue: IRow[]) => {
+  const updateRowCb = (
+    updateRowValue: IRow[],
+    removedRow: boolean,
+    id: number
+  ) => {
     setUpdateRowValue(updateRowValue);
-    console.log(updateRowValue)
+    setRemovedRow(removedRow);
+    setId(id);
   };
 
   useEffect(() => {
     (async () => {
       await gettingData(rows, setRows);
-      // console.log(rows);
     })();
   }, []);
 
   useEffect(() => {
-    updateRow(rows, setRows, updateRowValue);
-    console.log(updateRowValue)
+    updateRow(rows, setRows, updateRowValue, removedRow, id);
   }, [updateRowValue]);
 
   return (

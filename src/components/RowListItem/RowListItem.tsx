@@ -33,6 +33,7 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
     { id: 1, placeholder: salary, inputName: 'salary' },
     { id: 2, placeholder: equipmentCosts, inputName: 'equipmentCosts' },
     { id: 3, placeholder: overheads, inputName: 'overheads' },
+    { id: 4, placeholder: estimatedProfit, inputName: 'estimatedProfit' },
   ];
 
   const initialValue = {
@@ -62,7 +63,8 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
         supportCosts: 0,
       }
     );
-    updateRowCb([response.data.current]);
+
+    updateRowCb([response.data.current], false, id);
     setEditRowState(!editRowState);
   };
 
@@ -85,10 +87,12 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
   };
 
   const deleteRow = async () => {
-    const response = await axios.delete(`${baseUrl}/v1/outlay-rows/entity/${eID}/row/${id}/delete`)
-    console.log(response)
-    updateRowCb([response.data.current, id])
-  }
+    const response = await axios.delete(
+      `${baseUrl}/v1/outlay-rows/entity/${eID}/row/${id}/delete`
+    );
+    console.log(response);
+    updateRowCb([row], true, id);
+  };
 
   return (
     <>
@@ -97,7 +101,7 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
           className="tableBodyRow"
           onDoubleClick={() => setEditRowState(!editRowState)}
           onKeyDown={updateRowHandler}>
-          <TableButtons depth={depth} deleteRow={deleteRow}/>
+          <TableButtons depth={depth} deleteRow={deleteRow} />
           {!editRowState ? (
             <>
               {Object.entries(spanRow).map(([key, value]) => (

@@ -18,7 +18,7 @@ export interface IRowListItem {
   };
   depth: number;
 
-  updateRowCb: (value: IRow[]) => void;
+  updateRowCb: (value: IRow[], removedRow: boolean, id: number) => void;
 }
 
 export interface IObjectSearchById {

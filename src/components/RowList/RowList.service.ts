@@ -7,7 +7,6 @@ export const gettingData = async (
   setRows: (arg0: (prevState: IRow[]) => IRow[]) => void
 ) => {
   const response = await axios.get(`${baseUrl}${gettingDataUrl}`);
-  // console.log(response);
   if (rows.length === 0) {
     setRows((prevState) => [...prevState, ...response.data]);
   }
@@ -16,15 +15,13 @@ export const gettingData = async (
 export const updateRow = (
   oldValue: IRow[],
   setOldValue: (arg0: IRow[]) => void,
-  newValue: IRow[]
+  newValue: IRow[],
+  removedRow: boolean,
+  id: number
 ) => {
-  if (newValue[0] === null) {
-    setOldValue(
-      // @ts-ignore
-      oldValue.filter((oldObj) => oldObj.id !== newValue[1])
-    );
-    console.log(oldValue);
-    return oldValue
+  if (removedRow) {
+    setOldValue(oldValue.filter((oldObj) => oldObj.id !== id));
+    return oldValue;
   }
   setOldValue(
     oldValue.map((oldObj) => {
