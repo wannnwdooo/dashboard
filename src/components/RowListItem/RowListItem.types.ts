@@ -1,4 +1,4 @@
-import { IRow } from "../RowList";
+import { IRow } from '../RowList';
 
 export interface IRowListItem {
   row: {
@@ -18,7 +18,7 @@ export interface IRowListItem {
   };
   depth: number;
 
-  updateRowCb: (value: IRow) => void
+  updateRowCb: (value: IRow[]) => void;
 }
 
 export interface IObjectSearchById {

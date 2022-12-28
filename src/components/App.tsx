@@ -10,10 +10,9 @@ export const eID = 31357;
 export const gettingDataUrl = `/v1/outlay-rows/entity/${eID}/row/list`;
 export const createRowUrl = `/v1/outlay-rows/entity/${eID}/row/create`;
 
-export const updateRowUrl = `/v1/outlay-rows/entity/${eID}/row/{id}/update`
+export const updateRowUrl = `/v1/outlay-rows/entity/${eID}/row/{id}/update`;
 
 export const App: FC = () => {
-
   const createRow: any = async () => {
     const response = await axios.post(`${baseUrl}${createRowUrl}`, {
       equipmentCosts: 0,
@@ -24,7 +23,7 @@ export const App: FC = () => {
       mimExploitation: 0,
       overheads: 0,
       parentId: null,
-      rowName: 'f2',
+      rowName: 'f11',
       salary: 0,
       supportCosts: 0,
     });
@@ -35,7 +34,7 @@ export const App: FC = () => {
     <div className="appWrapper">
       <Navbar />
       <Sidebar />
-      <Table/>
+      <Table />
       <div className="buttonContainer">
         <button onClick={createRow}>создание строки</button>
       </div>

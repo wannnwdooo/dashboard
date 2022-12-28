@@ -33,7 +33,6 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
     { id: 1, placeholder: salary, inputName: 'salary' },
     { id: 2, placeholder: equipmentCosts, inputName: 'equipmentCosts' },
     { id: 3, placeholder: overheads, inputName: 'overheads' },
-    { id: 4, placeholder: estimatedProfit, inputName: 'estimatedProfit' },
   ];
 
   const initialValue = {
@@ -63,12 +62,13 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
         supportCosts: 0,
       }
     );
-    updateRowCb(response.data.current);
+    updateRowCb([response.data.current]);
     setEditRowState(!editRowState);
   };
-  const updateRowHandler: React.KeyboardEventHandler<
-    HTMLInputElement
-  > = async e => {
+
+  const updateRowHandler: React.KeyboardEventHandler<HTMLInputElement> = async (
+    e
+  ) => {
     if (value.rowName !== '') {
       if (e.key === 'Enter') await updateRow();
     }
@@ -84,6 +84,12 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
     });
   };
 
+  const deleteRow = async () => {
+    const response = await axios.delete(`${baseUrl}/v1/outlay-rows/entity/${eID}/row/${id}/delete`)
+    console.log(response)
+    updateRowCb([response.data.current, id])
+  }
+
   return (
     <>
       <li key={id} className={`${objectSearchById(treeStyle, depth)}`}>
@@ -91,7 +97,7 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
           className="tableBodyRow"
           onDoubleClick={() => setEditRowState(!editRowState)}
           onKeyDown={updateRowHandler}>
-          <TableButtons depth={depth} />
+          <TableButtons depth={depth} deleteRow={deleteRow}/>
           {!editRowState ? (
             <>
               {Object.entries(spanRow).map(([key, value]) => (
@@ -107,7 +113,7 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
                   key={id}
                   placeholder={`${placeholder}`}
                   className="tableBodyInput"
-                  onChange={e => inputChange(e, inputName)}
+                  onChange={(e) => inputChange(e, inputName)}
                 />
               ))}
             </>
@@ -116,7 +122,7 @@ export const RowListItem: FC<IRowListItem> = ({ row, depth, updateRowCb }) => {
         {child.length !== 0 && (
           <ul>
             {Array.isArray(child) &&
-              child.map(listItem => (
+              child.map((listItem) => (
                 <RowListItem
                   key={listItem.id}
                   row={listItem}
